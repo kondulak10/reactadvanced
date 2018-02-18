@@ -6,7 +6,7 @@ class AddItemPage extends React.Component {
     return (
       <div>
         <h1>AddItemPage</h1>
-        <Link to="homepage">Add item page</Link>
+        <Link to="/">Homepage</Link>
       </div>
     )
   }
