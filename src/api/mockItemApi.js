@@ -29,7 +29,7 @@ function replaceAll(str, find, replace) {
 }
 
 function generateId() {
-  return Math.max.apply(Math,array.map(function(o){return o.id;})) + 1;
+  return Math.max.apply(Math,items.map(function(o){return o.id;})) + 1;
 }
 
 class ItemApi {
@@ -46,16 +46,16 @@ class ItemApi {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         // Simulate server-side validation
-        const length = 1;
+        const length = 4;
         if (item.title.length < length) {
           reject(`Title must be at least ${length} characters.`);
         }
 
         if (item.id) {
-          const existingIndex = items.findIndex(a => a.id == course.id);
+          const existingIndex = items.findIndex(a => a.id == item.id);
           items.splice(existingIndex, 1, item);
         } else {
-          item.id = generateId(course);
+          item.id = generateId(item);
           items.push(item);
         }
 

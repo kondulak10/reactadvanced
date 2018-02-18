@@ -7,8 +7,21 @@ export default function itemReducer(state = initialState.items, action) {
       return [...state,
       Object.assign({}, action.item)
       ]
+
+    case types.CREATE_ITEM_SUCCESS:
+      return [...state,
+      Object.assign({}, action.item)
+      ]
+
+    case types.UPDATE_ITEM_SUCCESS:
+      return [
+        ...state.filter(item => item.id !== action.item.id),
+        Object.assign({}, action.item)
+      ]
+
     case types.LOAD_COURSES_SUCCESS:
       return action.items
+
     default:
       return state;
   }

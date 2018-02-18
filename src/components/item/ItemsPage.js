@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import * as itemActions from '../../actions/itemActions'
 import { bindActionCreators } from 'redux';
 import ItemsList from './ItemsList';
+import {browserHistory} from 'react-router';
+import ManageItemPage from './ManageItemPage';
 
 class ItemsPage extends React.Component {
 
@@ -13,20 +15,11 @@ class ItemsPage extends React.Component {
       item: { title: "" }
     }
 
-    this.onTitleChange = this.onTitleChange.bind(this);
-    this.onClickSave = this.onClickSave.bind(this);
+    this.redirectToAdd = this.redirectToAdd.bind(this);
   }
 
-  onTitleChange(event) {
-    const item = this.state.item;
-    item.title = event.target.value;
-    this.setState({
-      item: item
-    })
-  }
-
-  onClickSave() {
-    this.props.actions.createItem(this.state.item);
+  redirectToAdd() {
+    browserHistory.push("/item");
   }
 
   render() {
@@ -34,15 +27,11 @@ class ItemsPage extends React.Component {
 
     return (
       <div>
-        <button className="btn btn-primary" type="button">
-          Messages <span className="badge">4</span>
-        </button>
-
         <h1>ItemsPage</h1>
+        <h2>Add item</h2>
+        <input type="submit" value="Add item" className="btn btn-primary" onClick={this.redirectToAdd} />
+        <h2>See items</h2>
         <ItemsList items={items}></ItemsList>
-        <h1>Add item</h1>
-        <input type="text" onChange={this.onTitleChange} value={this.state.item.title} />
-        <input type="submit" value="Save" onClick={this.onClickSave} />
       </div>
     )
   }

@@ -1,9 +1,6 @@
 import * as types from './actionTypes'
 import ItemApi from '../api/mockItemApi';
-
-export function createItem(item) {
-  return { type: types.CREATE_ITEM, item }
-}
+import {beginAjaxCall, ajaxCallError} from "./ajaxStatusActions"
 
 export function loadItemsSuccess(items) {
   return {
@@ -11,12 +8,39 @@ export function loadItemsSuccess(items) {
   }
 }
 
+export function createItemSuccess(item) {
+  return {
+    type: types.CREATE_ITEM_SUCCESS, item
+  }
+}
+
+export function updateItemSuccess(item) {
+  return {
+    type: types.UPDATE_ITEM_SUCCESS, item
+  }
+}
+
 export function loadItems() {
   return function (dispatch) {
+    dispatch(beginAjaxCall());
     return ItemApi.getAll().then(items => {
       dispatch(loadItemsSuccess(items));
-    }).catch(r=>{
-      throw(r);
+    }).catch(r => {
+      dispatch(ajaxCallError(r))
+      throw (r);
     });
+  }
+}
+
+export function saveItem(item) {
+  return function (dispatch, getState) {
+    dispatch(beginAjaxCall());
+    return ItemApi.saveItem(item).then(savedItem => {
+      item.id ? dispatch(updateItemSuccess(savedItem)) :
+        dispatch(createItemSuccess(savedItem));
+    }).catch(r => {
+      dispatch(ajaxCallError(r))
+      throw (r);
+    })
   }
 }
