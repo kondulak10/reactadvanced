@@ -30,10 +30,14 @@ class ItemsPage extends React.Component {
   }
 
   render() {
-    const {items} = this.props;
+    const { items } = this.props;
 
     return (
       <div>
+        <button className="btn btn-primary" type="button">
+          Messages <span className="badge">4</span>
+        </button>
+
         <h1>ItemsPage</h1>
         <ItemsList items={items}></ItemsList>
         <h1>Add item</h1>
