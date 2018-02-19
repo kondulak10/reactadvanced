@@ -6,7 +6,7 @@ import * as itemActions from '../../actions/itemActions';
 import ItemForm from './ItemForm';
 import toastr from 'toastr'
 
-class ManageItemPage extends React.Component {
+export class ManageItemPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -34,8 +34,29 @@ class ManageItemPage extends React.Component {
     return this.setState({ item: item });
   }
 
+  itemFormIsValid() {
+    let valid = true;
+    let errors = {};
+
+    if (this.state.item.title.length < 4) {
+      errors.title = "Title must be at least 4 characters.";
+      valid = false;
+    }
+
+    this.setState({
+      errors: errors
+    })
+    return valid;
+  }
+
   saveItem(event) {
     event.preventDefault();
+
+    if (!this.itemFormIsValid()) {
+      return;
+    }
+
+
     this.setState({
       saving: true
     })

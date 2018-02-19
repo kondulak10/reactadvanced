@@ -10,5 +10,6 @@ export default (
     <IndexRoute component={HomePage}></IndexRoute>
     <Route path="items" component={ItemsPage}/>
     <Route path="item/:id" component={ManageItemPage}/>
+    <Route path="item" component={ManageItemPage}/>
   </Route>
 )
